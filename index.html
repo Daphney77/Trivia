@@ -1,23 +1,58 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#ffd51f"><title>Think Fast — Buzzer</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Think Fast!</title>
 <style>
-:root{--navy:#062b4d}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f3ec;color:var(--navy)}
-body{display:flex;justify-content:center}.app{width:min(100%,520px);min-height:100svh;padding:24px 18px 34px;text-align:center;background:linear-gradient(#fffaf1,#e7f5ff)}
-h1{font-size:clamp(43px,12vw,68px);line-height:.92;margin:18px 0 8px;font-weight:950;letter-spacing:-3px}.tag{font-size:clamp(19px,5.5vw,27px);font-weight:750;margin:0 0 16px}
-.duck{width:84%;max-width:420px;aspect-ratio:1/1;object-fit:cover;object-position:50% 42%;border-radius:30px;box-shadow:0 12px 30px #062b4d22;margin:4px auto 18px;display:block}
-.hint{font-weight:700;font-size:17px;margin:5px 0 15px}
-button{width:92%;max-width:430px;min-height:116px;border:0;border-radius:38px;background:linear-gradient(#ffe33c,#f5bf00);color:var(--navy);box-shadow:0 10px 0 #c49400,0 18px 26px #4d3c0030;font-size:clamp(41px,12vw,62px);font-weight:950;cursor:pointer;touch-action:manipulation}
-button:active,button.hit{transform:translateY(7px) scale(.985);box-shadow:0 3px 0 #c49400,0 8px 14px #4d3c0030}button small{display:block;font-size:16px;letter-spacing:3px;margin-top:-3px}
-.status{height:32px;margin:18px 0 2px;font-size:18px;font-weight:850}.rule{font-size:16px;margin:0 auto;max-width:360px;line-height:1.35}
-</style></head><body><main class="app">
-<h1>THINK FAST!</h1><p class="tag">See it. Solve it. Claim it!</p>
-<img class="duck" src="duck-poster.png" alt="Yellow rubber duck">
-<p class="hint">Know the answer? Hit the buzzer.</p>
-<button id="buzz">MOO! 🐮<small>TO ANSWER</small></button>
-<div class="status" id="status">Ready 🐥</div><p class="rule">First moo gets the first attempt!</p>
-<audio id="sound" preload="auto" src="moo.wav"></audio>
-</main><script>
-const b=document.getElementById('buzz'),a=document.getElementById('sound'),s=document.getElementById('status');
-b.onclick=()=>{a.currentTime=0;a.volume=1;a.play();if(navigator.vibrate)navigator.vibrate(60);b.classList.add('hit');s.textContent='MOO! Answer now 🐮';setTimeout(()=>b.classList.remove('hit'),170);setTimeout(()=>s.textContent='Ready 🐥',1050)};
-</script></body></html>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(#fff9e9,#e5f6ff);color:#082e50;text-align:center;min-height:100vh}
+main{max-width:520px;margin:auto;padding:26px 18px 40px}
+h1{font-size:clamp(44px,13vw,70px);line-height:.9;margin:18px 0 10px;font-weight:950;letter-spacing:-3px}
+.sub{font-size:23px;font-weight:750;margin:0 0 18px}
+img{width:82%;max-width:390px;aspect-ratio:1/1;object-fit:cover;object-position:center 42%;border-radius:30px;box-shadow:0 12px 30px #062b4d22}
+.prompt{font-size:18px;font-weight:700;margin:18px 0 14px}
+button{width:94%;min-height:125px;border:0;border-radius:40px;background:linear-gradient(#ffe63d,#f4bd00);color:#082e50;box-shadow:0 10px 0 #bd9000,0 18px 28px #55400030;font-weight:950;font-size:clamp(42px,12vw,64px);cursor:pointer;touch-action:manipulation}
+button small{display:block;font-size:15px;letter-spacing:3px;margin-top:-3px}
+button:active{transform:translateY(7px);box-shadow:0 3px 0 #bd9000}
+#status{font-size:19px;font-weight:850;height:30px;margin-top:20px}
+.rule{font-size:16px;margin:2px 0}
+.test{font-size:12px;opacity:.6;margin-top:22px}
+</style>
+</head>
+<body>
+<main>
+<h1>THINK FAST!</h1>
+<p class="sub">See it. Solve it. Claim it!</p>
+<img src="duck.png" alt="Yellow duck">
+<p class="prompt">Know the answer? Hit the buzzer.</p>
+<button id="moo">MOO! 🐮<small>TO ANSWER</small></button>
+<div id="status">Ready 🐥</div>
+<p class="rule">First moo gets the first attempt!</p>
+<p class="test">Turn your phone's media volume up.</p>
+<audio id="audio" preload="auto">
+  <source src="./moo.wav" type="audio/wav">
+</audio>
+</main>
+<script>
+const btn=document.getElementById("moo");
+const audio=document.getElementById("audio");
+const status=document.getElementById("status");
+
+async function playMoo(){
+  try{
+    audio.pause();
+    audio.currentTime=0;
+    audio.volume=1;
+    await audio.play();
+    status.textContent="MOO! Answer now 🐮";
+    if(navigator.vibrate) navigator.vibrate(60);
+    setTimeout(()=>status.textContent="Ready 🐥",1200);
+  }catch(err){
+    status.textContent="Sound blocked — tap again";
+  }
+}
+btn.addEventListener("click", playMoo);
+</script>
+</body>
+</html>
