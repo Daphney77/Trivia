@@ -28,5 +28,5 @@ button small{display:block;font-size:16px;letter-spacing:3px;margin-top:-3px}
 </main>
 <script>
 const b=document.getElementById('quack'),a=document.getElementById('sound'),s=document.getElementById('status');
-b.onclick=()=>{a.currentTime=0;a.volume=.78;a.play();if(navigator.vibrate)navigator.vibrate(60);b.classList.add('hit');s.textContent='QUACK! Answer now 🐥';setTimeout(()=>b.classList.remove('hit'),170);setTimeout(()=>s.textContent='Ready 🐥',900)};
+b.onclick=()=>{a.currentTime=0;a.volume=1;a.play();if(navigator.vibrate)navigator.vibrate(60);b.classList.add('hit');s.textContent='QUACK! Answer now 🐥';setTimeout(()=>b.classList.remove('hit'),170);setTimeout(()=>s.textContent='Ready 🐥',900)};
 </script></body></html>
