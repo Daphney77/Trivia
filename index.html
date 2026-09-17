@@ -1,61 +1,32 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#e32222">
-<title>Think Fast — Goose Buzzer</title>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffd51f"><title>Think Fast — Duck Buzzer</title>
 <style>
-:root{--navy:#062b4d;--red:#e32222;--cream:#fffaf0;--gold:#ffbd23}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#dff3ff;color:var(--navy)}
-body{min-height:100svh;display:flex;justify-content:center}
-.app{width:min(100%,520px);min-height:100svh;position:relative;overflow:hidden;background:linear-gradient(#bfe8ff 0 55%,#eef8e8 100%);padding:24px 18px 34px;text-align:center}
-h1{font-size:clamp(42px,12vw,68px);line-height:.9;margin:18px 0 8px;font-weight:950;letter-spacing:-3px}
+:root{--navy:#062b4d;--yellow:#ffd51f;--cream:#fffaf1}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f3ec;color:var(--navy)}
+body{display:flex;justify-content:center}.app{width:min(100%,520px);min-height:100svh;padding:24px 18px 34px;text-align:center;background:linear-gradient(#fffaf1,#e7f5ff)}
+h1{font-size:clamp(43px,12vw,68px);line-height:.92;margin:18px 0 8px;font-weight:950;letter-spacing:-3px}
 .tag{font-size:clamp(19px,5.5vw,27px);font-weight:750;margin:0 0 16px}
-.goose{width:86%;max-width:420px;aspect-ratio:1/1;object-fit:cover;object-position:50% 39%;border-radius:28px;box-shadow:0 12px 30px #06345a28;margin:4px auto 18px;display:block}
-.hint{font-weight:700;font-size:17px;margin:4px 0 14px}
-button{width:92%;max-width:430px;min-height:118px;border:0;border-radius:38px;background:linear-gradient(#f63b32,#ce0f13);color:#fff;box-shadow:0 11px 0 #8d0d12,0 18px 28px #53101842;font-size:clamp(42px,12vw,64px);font-weight:950;letter-spacing:1px;cursor:pointer;touch-action:manipulation}
-button:active,button.honking{transform:translateY(8px) scale(.985);box-shadow:0 3px 0 #8d0d12,0 8px 16px #53101842}
-button small{display:block;font-size:16px;letter-spacing:3px;margin-top:-4px}
-.status{height:32px;margin:18px 0 2px;font-weight:850;font-size:18px}
-.rule{font-size:16px;margin:0 auto;max-width:370px;line-height:1.35}
-.credit{font-size:11px;opacity:.58;margin-top:24px}
-.ripple{position:absolute;inset:auto;pointer-events:none;border:6px solid #ffbd23;border-radius:999px;width:50px;height:50px;opacity:0}
-@keyframes pulse{0%{transform:scale(.2);opacity:.9}100%{transform:scale(7);opacity:0}}
-.ripple.go{animation:pulse .65s ease-out}
-</style>
-</head>
-<body>
+.duck{width:84%;max-width:420px;aspect-ratio:1/1;object-fit:cover;object-position:50% 42%;border-radius:30px;box-shadow:0 12px 30px #062b4d22;margin:4px auto 18px;display:block}
+.hint{font-weight:700;font-size:17px;margin:5px 0 15px}
+button{width:92%;max-width:430px;min-height:116px;border:0;border-radius:38px;background:linear-gradient(#ffe33c,#f5bf00);color:var(--navy);box-shadow:0 10px 0 #c49400,0 18px 26px #4d3c0030;font-size:clamp(41px,12vw,62px);font-weight:950;cursor:pointer;touch-action:manipulation}
+button:active,button.hit{transform:translateY(7px) scale(.985);box-shadow:0 3px 0 #c49400,0 8px 14px #4d3c0030}
+button small{display:block;font-size:16px;letter-spacing:3px;margin-top:-3px}
+.status{height:32px;margin:18px 0 2px;font-size:18px;font-weight:850}.rule{font-size:16px;margin:0 auto;max-width:360px;line-height:1.35}
+.note{font-size:12px;opacity:.65;margin-top:22px}
+</style></head><body>
 <main class="app">
-  <h1>THINK FAST!</h1>
-  <p class="tag">See it. Solve it. Honk it!</p>
-  <img class="goose" src="goose-poster.png" alt="Canada goose honking">
-  <p class="hint">Know the answer? Honk to claim it.</p>
-  <button id="honk" aria-label="Honk to answer">HONK!<small>TO ANSWER</small></button>
-  <div class="status" id="status">Ready to honk 🪿</div>
-  <p class="rule">First honk gets the first attempt!</p>
-  <div class="ripple" id="ripple"></div>
-  <audio id="audio" preload="auto" src="goose-honk.wav"></audio>
+<h1>THINK FAST!</h1><p class="tag">See it. Solve it. Quack it!</p>
+<img class="duck" src="duck-poster.png" alt="Yellow rubber duck">
+<p class="hint">Know the answer? Quack to claim it.</p>
+<button id="quack">QUACK!<small>TO ANSWER</small></button>
+<div class="status" id="status">Ready 🐥</div>
+<p class="rule">First quack gets the first attempt!</p>
+<p class="note">Keep this page open during trivia.</p>
+<audio id="sound" preload="auto" src="duck-quack.wav"></audio>
 </main>
 <script>
-const btn=document.getElementById('honk'), audio=document.getElementById('audio'),
-status=document.getElementById('status'), ripple=document.getElementById('ripple');
-function honk(){
-  audio.currentTime=0;
-  audio.volume=1;
-  audio.play().catch(()=>{status.textContent='Tap again to enable sound';});
-  if(navigator.vibrate) navigator.vibrate([80,40,100]);
-  btn.classList.add('honking');
-  status.textContent='HONK! Answer now!';
-  const r=btn.getBoundingClientRect();
-  ripple.style.left=(r.left+r.width/2-25)+'px';
-  ripple.style.top=(r.top+r.height/2-25+window.scrollY)+'px';
-  ripple.classList.remove('go'); void ripple.offsetWidth; ripple.classList.add('go');
-  setTimeout(()=>btn.classList.remove('honking'),180);
-  setTimeout(()=>status.textContent='Ready to honk 🪿',1300);
-}
-btn.addEventListener('click',honk);
-</script>
-</body>
-</html>
+const b=document.getElementById('quack'),a=document.getElementById('sound'),s=document.getElementById('status');
+b.onclick=()=>{a.currentTime=0;a.volume=.78;a.play();if(navigator.vibrate)navigator.vibrate(60);b.classList.add('hit');s.textContent='QUACK! Answer now 🐥';setTimeout(()=>b.classList.remove('hit'),170);setTimeout(()=>s.textContent='Ready 🐥',900)};
+</script></body></html>
